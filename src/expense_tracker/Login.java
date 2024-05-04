@@ -105,7 +105,7 @@ public class Login extends JFrame implements ActionListener{
                 Boolean status = false;
 		try {
                     Conn con = new Conn();
-                    String sql = "select * from account where username=? and password=?";
+                    String sql = "select * from user where username=? and password=?";
                     PreparedStatement st = con.c.prepareStatement(sql);
 
                     st.setString(1, textField.getText());

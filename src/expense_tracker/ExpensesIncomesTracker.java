@@ -82,7 +82,7 @@ public class ExpensesIncomesTracker extends JFrame {
         setVisible(true);
         try {
                     Conn con = new Conn();
-                    String sql = "select * from transaction where username=?";
+                    String sql = "select date,des,amount,typer from transactions where username=?";
                     PreparedStatement st = con.c.prepareStatement(sql);
 
                     st.setString(1, user);
@@ -106,7 +106,7 @@ public class ExpensesIncomesTracker extends JFrame {
     {
         double x=Double.parseDouble(amount);
         String dis="Income";
-        if(type.equals("1"))
+        if(type.equals("expense"))
         {
             dis="Expense";
             x=Double.parseDouble(amount)*-1;
@@ -123,6 +123,7 @@ public class ExpensesIncomesTracker extends JFrame {
         String description = descriptionField.getText();
         String amountStr = amountField.getText();
         String type = (String)typeCombobox.getSelectedItem();
+        type=type.toLowerCase();
         int typ=0;
         double amount;
         if(amountStr.isEmpty())
@@ -140,7 +141,7 @@ public class ExpensesIncomesTracker extends JFrame {
             JOptionPane.showMessageDialog(this, "Invalid Amount Format", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if(type.equals("Expense"))
+        if(type.equals("expense"))
         {
             amount *= -1;
             typ=1;
@@ -148,12 +149,12 @@ public class ExpensesIncomesTracker extends JFrame {
         
         try {
                     Conn con = new Conn();
-                    String sql = "insert into transaction value(?,?,?,?,?)";
+                    String sql = "insert into transactions (date,des,amount,typer,username) value(?,?,?,?,?)";
                     PreparedStatement st = con.c.prepareStatement(sql);
                     st.setString(1,date);
                     st.setString(2,description);
                     st.setString(3,amountStr);
-                    st.setString(4,String.valueOf(typ));
+                    st.setString(4,type);
                     st.setString(5,user);
 
                     st.executeUpdate();
@@ -164,6 +165,17 @@ public class ExpensesIncomesTracker extends JFrame {
         ExpenseIncomeEntry entry = new ExpenseIncomeEntry(date, description, amount, type);
         tableModel.addEntry(entry);
         balance += amount;
+        try {
+                    Conn con = new Conn();
+                    String sql = "update current_balance set balance=? where username=?";
+                    PreparedStatement st = con.c.prepareStatement(sql);
+                    st.setString(1,String.valueOf(balance));
+                    st.setString(2,user);
+
+                    st.executeUpdate();
+        }catch (Exception e2) {
+                    e2.printStackTrace();
+		}   
         balanceLabel.setText("Balance: $"+balance);
         clearInputFields();
     }

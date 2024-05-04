@@ -89,7 +89,7 @@ public class UpdatePass extends JFrame implements ActionListener{
                 Boolean status = false;
 		try {
                     Conn con = new Conn();
-                    String sql = "select * from account where username=? and password=?";
+                    String sql = "select * from user where username=? and password=?";
                     PreparedStatement st = con.c.prepareStatement(sql);
 
                     st.setString(1, textField.getText());
@@ -99,7 +99,7 @@ public class UpdatePass extends JFrame implements ActionListener{
                     if (rs.next()) {
                         try {
                             Conn cons = new Conn();
-                            String sqls = "update account set password=? where username=?;";
+                            String sqls = "update user set password=? where username=?;";
                             PreparedStatement rst = cons.c.prepareStatement(sqls);
                             rst.setString(1, newpasswordField.getText());
                         rst.setString(2, textField.getText());

@@ -81,7 +81,7 @@ public class DeleteAcc extends JFrame implements ActionListener{
                 Boolean status = false;
 		try {
                     Conn con = new Conn();
-                    String sql = "select * from account where username=? and password=?";
+                    String sql = "select * from user where username=? and password=?";
                     PreparedStatement st = con.c.prepareStatement(sql);
 
                     st.setString(1, textField.getText());
@@ -91,7 +91,7 @@ public class DeleteAcc extends JFrame implements ActionListener{
                     if (rs.next()) {
                         try {
                             Conn cons = new Conn();
-                            String sqls = "delete from account where username=?;";
+                            String sqls = "delete from user where username=?;";
                             PreparedStatement rst = cons.c.prepareStatement(sqls);
                         rst.setString(1, textField.getText());
                     
@@ -116,8 +116,5 @@ public class DeleteAcc extends JFrame implements ActionListener{
 		su.setVisible(true);
             }
         }
-        public static void main(String[] args) {
-                new DeleteAcc().setVisible(true);
-	}
 
 }

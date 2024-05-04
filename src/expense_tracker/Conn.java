@@ -6,7 +6,7 @@ public class Conn{
     public Conn(){  
         try{  
             Class.forName("com.mysql.cj.jdbc.Driver");  
-            c =DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/expense_tracker","root","Hamzalfs@7086"); 
+            c =DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/expense_trackers","root","Hamzalfs@7086"); 
             s =c.createStatement();  
         }catch(Exception e){ 
             System.out.println(e);

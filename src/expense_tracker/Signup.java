@@ -83,7 +83,7 @@ public class Signup extends JFrame implements ActionListener{
                     Conn con = new Conn();
                     
                     
-                    String sql2 = "select * from account where username=?";
+                    String sql2 = "select * from user where username=?";
                     PreparedStatement st1 = con.c.prepareStatement(sql2);
 
                     st1.setString(1, textField.getText());
@@ -92,7 +92,7 @@ public class Signup extends JFrame implements ActionListener{
                     if (rs.next()) {
                         JOptionPane.showMessageDialog(null, "Username already exist!");
                     }else{
-                        String sql = "insert into account value(?,?)";
+                        String sql = "insert into user (username,password) value(?,?)";
                     PreparedStatement st = con.c.prepareStatement(sql);
 
                     st.setString(1, textField.getText());
